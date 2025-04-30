@@ -4,6 +4,7 @@ channel = "stable-24_05"
 
 language = "python3"
 run = "python app.py"
+packages = ["freetype", "lcms2", "libimagequant", "libjpeg", "libtiff", "libwebp", "libxcrypt", "openjpeg", "tcl", "tk", "zlib"]
 
 [[ports]]
 localPort = 8080
