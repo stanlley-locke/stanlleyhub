@@ -1,0 +1,32 @@
+# Create main directory structure
+mkdir -p templates static/css static/js static/images
+
+# Create template files
+touch templates/base.html
+touch templates/index.html
+touch templates/login.html
+touch templates/signup.html
+touch templates/forgot_password.html
+touch templates/reset_password.html
+touch templates/dashboard.html
+touch templates/courses.html
+touch templates/course_detail.html
+touch templates/articles.html
+touch templates/article_detail.html
+
+# Create static files
+touch static/css/styles.css
+touch static/js/main.js
+
+# Create placeholder images (you'll need to replace these with actual images later)
+touch static/images/hero.svg
+touch static/images/cyber_intro.jpg
+touch static/images/pentest.jpg
+touch static/images/fullstack.jpg
+touch static/images/python_data.jpg
+touch static/images/network_security.jpg
+touch static/images/zero_trust.jpg
+touch static/images/code_review.jpg
+touch static/images/owasp.jpg
+touch static/images/containers.jpg
+touch static/images/instructor.jpg

@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block title %}Sign Up | StanleyHub{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-header">
+            <h1>Create an account</h1>
+            <p>Sign up to get started with StanleyHub</p>
+        </div>
+
+        <div class="social-login">
+            <button class="btn-social" id="google-signup">
+                <i class="fab fa-google"></i>
+                <span>Continue with Google</span>
+            </button>
+            <button class="btn-social" id="github-signup">
+                <i class="fab fa-github"></i>
+                <span>Continue with GitHub</span>
+            </button>
+        </div>
+
+        <div class="divider">
+            <span>or</span>
+        </div>
+
+        <form id="signup-form" method="POST" action="{{ url_for('signup') }}">
+            <div class="form-group">
+                <label for="name" class="form-label">Full Name</label>
+                <input type="text" id="name" name="name" class="form-input" placeholder="Enter your full name" required>
+                <div class="error-message" id="name-error"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" id="email" name="email" class="form-input" placeholder="Enter your email" required>
+                <div class="error-message" id="email-error"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="password" class="form-label">Password</label>
+                <div class="password-input-wrapper">
+                    <input type="password" id="password" name="password" class="form-input" placeholder="Create a password" required>
+                    <button type="button" class="password-toggle" id="password-toggle">Show</button>
+                </div>
+                <div class="error-message" id="password-error"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="confirm-password" class="form-label">Confirm Password</label>
+                <div class="password-input-wrapper">
+                    <input type="password" id="confirm-password" name="confirm-password" class="form-input" placeholder="Confirm your password" required>
+                    <button type="button" class="password-toggle" id="confirm-password-toggle">Show</button>
+                </div>
+                <div class="error-message" id="confirm-password-error"></div>
+            </div>
+
+            <button type="submit" class="btn-primary">Create Account</button>
+        </form>
+    </div>
+
+    <div class="auth-footer">
+        <p>Already have an account? <a href="{{ url_for('login') }}">Sign in</a></p>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // Password toggle functionality
+        const passwordToggles = document.querySelectorAll(".password-toggle");
+
+        passwordToggles.forEach((toggle) => {
+            toggle.addEventListener("click", function() {
+                const input = this.previousElementSibling;
+                const type = input.getAttribute("type") === "password" ? "text" : "password";
+                input.setAttribute("type", type);
+                this.textContent = type === "password" ? "Show" : "Hide";
+            });
+        });
+
+        // Social signup buttons
+        const googleSignupBtn = document.getElementById("google-signup");
+        const githubSignupBtn = document.getElementById("github-signup");
+
+        if (googleSignupBtn) {
+            googleSignupBtn.addEventListener("click", () => {
+                alert("Google authentication would happen here. In a real implementation, you would be redirected to Google's OAuth flow.");
+            });
+        }
+
+        if (githubSignupBtn) {
+            githubSignupBtn.addEventListener("click", () => {
+                alert("GitHub authentication would happen here. In a real implementation, you would be redirected to GitHub's OAuth flow.");
+            });
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,344 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ course.title }} | StanleyHub{% endblock %}
+
+{% block content %}
+<section class="course-header">
+    <div class="container">
+        <div class="course-header-content">
+            <div class="course-breadcrumb">
+                <a href="{{ url_for('courses') }}">Courses</a> / 
+                <span>{{ course.category|replace('_', ' ')|capitalize }}</span>
+            </div>
+            <h1>{{ course.title }}</h1>
+            <p>{{ course.description }}</p>
+            <div class="course-meta">
+                <span class="course-level {{ course.level }}">{{ course.level|capitalize }}</span>
+                <span class="course-category">{{ course.category|replace('_', ' ')|capitalize }}</span>
+            </div>
+            {% if not is_enrolled %}
+                <a href="{{ url_for('enroll', course_id=course.id) }}" class="btn-primary">Enroll Now</a>
+            {% else %}
+                <a href="#" class="btn-secondary">Continue Learning</a>
+            {% endif %}
+        </div>
+        <div class="course-header-image">
+            <img src="{{ url_for('static', filename='images/' + course.image) }}" alt="{{ course.title }}">
+        </div>
+    </div>
+</section>
+
+<section class="course-content">
+    <div class="container">
+        <div class="course-tabs">
+            <button class="tab-btn active" data-tab="overview">Overview</button>
+            <button class="tab-btn" data-tab="curriculum">Curriculum</button>
+            <button class="tab-btn" data-tab="instructor">Instructor</button>
+            <button class="tab-btn" data-tab="reviews">Reviews</button>
+        </div>
+
+        <div class="tab-content active" id="overview">
+            <div class="course-overview">
+                <h2>About This Course</h2>
+                <p>{{ course.description }}</p>
+
+                <h3>What You'll Learn</h3>
+                <ul class="course-features">
+                    {% if course.category == 'cybersecurity' %}
+                        <li><i class="fas fa-check"></i> Understand fundamental cybersecurity concepts and principles</li>
+                        <li><i class="fas fa-check"></i> Identify common security threats and vulnerabilities</li>
+                        <li><i class="fas fa-check"></i> Implement security controls and best practices</li>
+                        <li><i class="fas fa-check"></i> Perform basic security assessments and audits</li>
+                        <li><i class="fas fa-check"></i> Develop incident response and recovery plans</li>
+                    {% else %}
+                        <li><i class="fas fa-check"></i> Master core programming concepts and techniques</li>
+                        <li><i class="fas fa-check"></i> Build robust and scalable applications</li>
+                        <li><i class="fas fa-check"></i> Implement best practices for software development</li>
+                        <li><i class="fas fa-check"></i> Work with modern frameworks and tools</li>
+                        <li><i class="fas fa-check"></i> Collaborate effectively in development teams</li>
+                    {% endif %}
+                </ul>
+
+                <h3>Requirements</h3>
+                <ul class="course-requirements">
+                    {% if course.level == 'beginner' %}
+                        <li><i class="fas fa-circle"></i> No prior experience required</li>
+                        <li><i class="fas fa-circle"></i> Basic computer literacy</li>
+                    {% elif course.level == 'intermediate' %}
+                        <li><i class="fas fa-circle"></i> Basic understanding of programming concepts</li>
+                        <li><i class="fas fa-circle"></i> Familiarity with command line interfaces</li>
+                    {% else %}
+                        <li><i class="fas fa-circle"></i> Strong programming background</li>
+                        <li><i class="fas fa-circle"></i> Experience with related technologies</li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+
+        <div class="tab-content" id="curriculum">
+            <div class="course-curriculum">
+                <h2>Course Curriculum</h2>
+
+                <div class="curriculum-section">
+                    <div class="section-header">
+                        <h3>Section 1: Introduction</h3>
+                        <span>3 lectures • 45 min</span>
+                    </div>
+                    <div class="section-content">
+                        <div class="lecture-item">
+                            <div class="lecture-icon"><i class="fas fa-play-circle"></i></div>
+                            <div class="lecture-details">
+                                <h4>Welcome to the Course</h4>
+                                <span>15 min</span>
+                            </div>
+                        </div>
+                        <div class="lecture-item">
+                            <div class="lecture-icon"><i class="fas fa-play-circle"></i></div>
+                            <div class="lecture-details">
+                                <h4>Course Overview</h4>
+                                <span>10 min</span>
+                            </div>
+                        </div>
+                        <div class="lecture-item">
+                            <div class="lecture-icon"><i class="fas fa-file-alt"></i></div>
+                            <div class="lecture-details">
+                                <h4>Setting Up Your Environment</h4>
+                                <span>20 min</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="curriculum-section">
+                    <div class="section-header">
+                        <h3>Section 2: Core Concepts</h3>
+                        <span>5 lectures • 1h 30min</span>
+                    </div>
+                    <div class="section-content">
+                        <div class="lecture-item">
+                            <div class="lecture-icon"><i class="fas fa-play-circle"></i></div>
+                            <div class="lecture-details">
+                                <h4>Fundamental Principles</h4>
+                                <span>20 min</span>
+                            </div>
+                        </div>
+                        <div class="lecture-item">
+                            <div class="lecture-icon"><i class="fas fa-play-circle"></i></div>
+                            <div class="lecture-details">
+                                <h4>Key Terminology</h4>
+                                <span>15 min</span>
+                            </div>
+                        </div>
+                        <div class="lecture-item">
+                            <div class="lecture-icon"><i class="fas fa-file-alt"></i></div>
+                            <div class="lecture-details">
+                                <h4>Practical Examples</h4>
+                                <span>25 min</span>
+                            </div>
+                        </div>
+                        <div class="lecture-item">
+                            <div class="lecture-icon"><i class="fas fa-laptop-code"></i></div>
+                            <div class="lecture-details">
+                                <h4>Hands-on Exercise</h4>
+                                <span>20 min</span>
+                            </div>
+                        </div>
+                        <div class="lecture-item">
+                            <div class="lecture-icon"><i class="fas fa-tasks"></i></div>
+                            <div class="lecture-details">
+                                <h4>Section Quiz</h4>
+                                <span>10 min</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- More sections would be added here -->
+            </div>
+        </div>
+
+        <div class="tab-content" id="instructor">
+            <div class="course-instructor">
+                <h2>Meet Your Instructor</h2>
+
+                <div class="instructor-profile">
+                    <div class="instructor-avatar">
+                        <img src="{{ url_for('static', filename='images/instructor.jpg') }}" alt="Instructor">
+                    </div>
+                    <div class="instructor-info">
+                        <h3>John Stanley</h3>
+                        <p class="instructor-title">Senior Security Engineer & Educator</p>
+                        <div class="instructor-stats">
+                            <div class="stat">
+                                <i class="fas fa-star"></i>
+                                <span>4.8 Instructor Rating</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-user-graduate"></i>
+                                <span>10,000+ Students</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-book"></i>
+                                <span>15 Courses</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="instructor-bio">
+                    <p>John Stanley is a seasoned cybersecurity professional with over 15 years of experience in the field. He has worked with Fortune 500 companies to secure their infrastructure and has been teaching cybersecurity and software engineering for the past 8 years.</p>
+                    <p>John holds multiple industry certifications including CISSP, CEH, and OSCP. He is passionate about making complex security concepts accessible to learners of all levels.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="reviews">
+            <div class="course-reviews">
+                <h2>Student Reviews</h2>
+
+                <div class="reviews-summary">
+                    <div class="rating-average">
+                        <span class="rating-number">4.8</span>
+                        <div class="rating-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <span class="rating-count">Based on 245 reviews</span>
+                    </div>
+                    <div class="rating-breakdown">
+                        <div class="rating-bar">
+                            <span class="rating-label">5 stars</span>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 75%;"></div>
+                            </div>
+                            <span class="rating-percent">75%</span>
+                        </div>
+                        <div class="rating-bar">
+                            <span class="rating-label">4 stars</span>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 20%;"></div>
+                            </div>
+                            <span class="rating-percent">20%</span>
+                        </div>
+                        <div class="rating-bar">
+                            <span class="rating-label">3 stars</span>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 3%;"></div>
+                            </div>
+                            <span class="rating-percent">3%</span>
+                        </div>
+                        <div class="rating-bar">
+                            <span class="rating-label">2 stars</span>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 1%;"></div>
+                            </div>
+                            <span class="rating-percent">1%</span>
+                        </div>
+                        <div class="rating-bar">
+                            <span class="rating-label">1 star</span>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 1%;"></div>
+                            </div>
+                            <span class="rating-percent">1%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reviews-list">
+                    <div class="review-item">
+                        <div class="review-header">
+                            <div class="reviewer-avatar">
+                                <span>M</span>
+                            </div>
+                            <div class="reviewer-info">
+                                <h4>Michael Johnson</h4>
+                                <div class="review-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <span class="review-date">2 months ago</span>
+                            </div>
+                        </div>
+                        <div class="review-content">
+                            <p>This course exceeded my expectations. The instructor explains complex concepts in a way that's easy to understand, and the hands-on exercises really helped solidify my understanding.</p>
+                        </div>
+                    </div>
+
+                    <div class="review-item">
+                        <div class="review-header">
+                            <div class="reviewer-avatar">
+                                <span>S</span>
+                            </div>
+                            <div class="reviewer-info">
+                                <h4>Sarah Williams</h4>
+                                <div class="review-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <span class="review-date">1 month ago</span>
+                            </div>
+                        </div>
+                        <div class="review-content">
+                            <p>As someone with no prior experience in this field, I found this course to be incredibly accessible. The instructor breaks down complex topics into manageable chunks, and the practical examples are very helpful.</p>
+                        </div>
+                    </div>
+
+                    <div class="review-item">
+                        <div class="review-header">
+                            <div class="reviewer-avatar">
+                                <span>D</span>
+                            </div>
+                            <div class="reviewer-info">
+                                <h4>David Chen</h4>
+                                <div class="review-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <span class="review-date">3 weeks ago</span>
+                            </div>
+                        </div>
+                        <div class="review-content">
+                            <p>Great course overall. The content is comprehensive and well-structured. I would have liked to see more advanced topics covered, but it's an excellent foundation for beginners and intermediate learners.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const tabId = button.dataset.tab;
+
+                // Remove active class from all buttons and contents
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+
+                // Add active class to clicked button and corresponding content
+                button.classList.add('active');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <h1>Master Software Engineering & Cybersecurity</h1>
+            <p>Join StanleyHub to learn from industry experts and advance your career with hands-on courses and practical resources.</p>
+            <div class="hero-buttons">
+                <a href="{{ url_for('courses') }}" class="btn-primary">Explore Courses</a>
+                <a href="{{ url_for('signup') }}" class="btn-secondary">Join Now</a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="{{ url_for('static', filename='images/hero.svg') }}" alt="StanleyHub Hero">
+        </div>
+    </div>
+</section>
+
+<section class="features">
+    <div class="container">
+        <div class="section-header">
+            <h2>Why Choose StanleyHub</h2>
+            <p>We provide comprehensive learning resources for software engineers and cybersecurity professionals</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-laptop-code"></i>
+                </div>
+                <h3>Expert-Led Courses</h3>
+                <p>Learn from industry professionals with years of experience in software engineering and cybersecurity.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3>Hands-On Labs</h3>
+                <p>Practice in real-world environments with our interactive labs and coding exercises.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-certificate"></i>
+                </div>
+                <h3>Industry Certifications</h3>
+                <p>Prepare for top industry certifications with our specialized courses and practice exams.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3>Community Support</h3>
+                <p>Join our community of learners and professionals to network and collaborate.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="featured-courses">
+    <div class="container">
+        <div class="section-header">
+            <h2>Featured Courses</h2>
+            <p>Start your learning journey with our most popular courses</p>
+        </div>
+        <div class="courses-grid">
+            {% for course in featured_courses %}
+            <div class="course-card">
+                <div class="course-image">
+                    <img src="{{ url_for('static', filename='images/' + course.image) }}" alt="{{ course.title }}">
+                    <div class="course-level {{ course.level }}">{{ course.level|capitalize }}</div>
+                </div>
+                <div class="course-content">
+                    <div class="course-category">{{ course.category|replace('_', ' ')|capitalize }}</div>
+                    <h3><a href="{{ url_for('course_detail', course_id=course.id) }}">{{ course.title }}</a></h3>
+                    <p>{{ course.description|truncate(100) }}</p>
+                    <a href="{{ url_for('course_detail', course_id=course.id) }}" class="btn-text">Learn More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="section-footer">
+            <a href="{{ url_for('courses') }}" class="btn-secondary">View All Courses</a>
+        </div>
+    </div>
+</section>
+
+<section class="recent-articles">
+    <div class="container">
+        <div class="section-header">
+            <h2>Latest Articles</h2>
+            <p>Stay updated with the latest trends and insights in software engineering and cybersecurity</p>
+        </div>
+        <div class="articles-grid">
+            {% for article in recent_articles %}
+            <div class="article-card">
+                <div class="article-image">
+                    <img src="{{ url_for('static', filename='images/' + article.image) }}" alt="{{ article.title }}">
+                    <div class="article-category">{{ article.category|replace('_', ' ')|capitalize }}</div>
+                </div>
+                <div class="article-content">
+                    <h3><a href="{{ url_for('article_detail', article_id=article.id) }}">{{ article.title }}</a></h3>
+                    <p>{{ article.content|truncate(150) }}</p>
+                    <div class="article-meta">
+                        <span class="article-date">{{ article.created_at.strftime('%B %d, %Y') }}</span>
+                        <a href="{{ url_for('article_detail', article_id=article.id) }}" class="btn-text">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="section-footer">
+            <a href="{{ url_for('articles') }}" class="btn-secondary">View All Articles</a>
+        </div>
+    </div>
+</section>
+
+<section class="cta">
+    <div class="container">
+        <div class="cta-content">
+            <h2>Ready to Start Your Learning Journey?</h2>
+            <p>Join thousands of professionals who are advancing their careers with StanleyHub.</p>
+            <a href="{{ url_for('signup') }}" class="btn-primary">Sign Up Now</a>
+        </div>
+    </div>
+</section>
+{% endblock %}
