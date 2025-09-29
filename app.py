@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash, ses
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
 from datetime import datetime, timedelta
+import logging
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -10,16 +11,19 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///stanleyhub.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=30)  # For "remember me" functionality
 
+# Configure logging
+logging.basicConfig(level=logging.DEBUG)
+
 # Import and initialize db
 from models import db
 db.init_app(app)
 
 # Import models after db initialization
-from models import User, Course, Article, UserCourse
+from models import User, Course, Article, UserCourse, CourseStep, LearningMaterial
 
 def create_sample_data():
     try:
-        # Create admin user
+        # --- Users ---
         admin = User(
             name='Admin User',
             email='admin@stanleyhub.com',
@@ -28,7 +32,6 @@ def create_sample_data():
         )
         db.session.add(admin)
 
-        # Create regular user for testing
         user = User(
             name='Test User',
             email='user@example.com',
@@ -37,8 +40,8 @@ def create_sample_data():
         )
         db.session.add(user)
 
-        # Create courses
-        courses = [
+        # --- Courses ---
+        courses_data = [
             {
                 'title': 'Introduction to Cybersecurity',
                 'description': 'Learn the fundamentals of cybersecurity including threat models, security principles, and basic security practices.',
@@ -81,18 +84,25 @@ def create_sample_data():
             }
         ]
 
-        for course_data in courses:
-            course = Course(
-                title=course_data['title'],
-                description=course_data['description'],
-                image=course_data['image'],
-                category=course_data['category'],
-                level=course_data['level'],
-                featured=course_data['featured']
+        # Create Course objects and keep references
+        created_courses = {}
+        for cd in courses_data:
+            c = Course(
+                title=cd['title'],
+                description=cd['description'],
+                image=cd.get('image'),
+                category=cd.get('category'),
+                level=cd.get('level'),
+                featured=cd.get('featured', False)
             )
-            db.session.add(course)
+            db.session.add(c)
+            # store by title for later reference
+            created_courses[cd['title']] = c
 
-        # Create articles
+        # Flush so course ids are assigned before creating dependent records
+        db.session.flush()
+
+        # --- Articles ---
         articles = [
             {
                 'title': 'Understanding Zero Trust Security Model',
@@ -120,24 +130,99 @@ def create_sample_data():
             }
         ]
 
-        for article_data in articles:
+        for a in articles:
             article = Article(
-                title=article_data['title'],
-                content=article_data['content'],
-                category=article_data['category'],
-                image=article_data['image'],
+                title=a['title'],
+                content=a['content'],
+                category=a.get('category'),
+                image=a.get('image'),
                 created_at=datetime.now()
             )
             db.session.add(article)
 
-        # Commit all changes
+        db.session.flush()
+
+        # --- Course Steps ---
+        # Define steps per course title for clarity
+        steps_by_course = {
+            'Introduction to Cybersecurity': [
+                ('Introduction', 'Welcome to the course!'),
+                ('Getting Started', 'Learn the basics.')
+            ],
+            'Advanced Penetration Testing': [
+                ('Advanced Topics', 'Dive deeper into penetration testing.'),
+                ('Ethical Hacking Practices', 'Ethics and legality of hacking.')
+            ],
+            'Full Stack Web Development': [
+                ('Frontend Development', 'Learn about HTML, CSS, and JavaScript.'),
+                ('Backend Development', 'Learn about server-side programming.')
+            ],
+            'Python for Data Science': [
+                ('Data Analysis', 'Learn how to analyze data using Python.'),
+                ('Machine Learning', 'Intro to machine learning.')
+            ],
+            'Network Security Fundamentals': [
+                ('Network Basics', 'Understand the basics of computer networks.'),
+                ('Firewall Configuration', 'Learn how to configure firewalls.')
+            ]
+        }
+
+        # Create CourseStep rows
+        for course_title, steps in steps_by_course.items():
+            course_obj = created_courses.get(course_title)
+            if not course_obj:
+                continue
+            for idx, (step_title, step_desc) in enumerate(steps, start=1):
+                step = CourseStep(
+                    course_id=course_obj.id,
+                    title=step_title,
+                    description=step_desc,
+                    number=idx
+                )
+                db.session.add(step)
+
+        db.session.flush()
+
+        # --- Learning Materials ---
+        # Provide explicit titles — fallback to generated title if missing
+        learning_materials = []
+        for course_title, steps in steps_by_course.items():
+            course_obj = created_courses.get(course_title)
+            if not course_obj:
+                continue
+            for idx, (step_title, step_desc) in enumerate(steps, start=1):
+                lm = {
+                    'course_id': course_obj.id,
+                    'step_number': idx,
+                    'material_type': 'text',
+                    'title': f'{step_title} - Overview',
+                    'content': f'{step_title}: {step_desc}'
+                }
+                learning_materials.append(lm)
+
+        # Add to DB
+        for m in learning_materials:
+            title = m.get('title') or f"Step {m['step_number']} - Material"
+            material = LearningMaterial(
+                course_id=m['course_id'],
+                step_number=m['step_number'],
+                material_type=m['material_type'],
+                title=title,
+                url=m.get('url'),
+                content=m.get('content')
+            )
+            db.session.add(material)
+
+        # Final commit
         db.session.commit()
         print("Sample data created successfully!")
 
     except Exception as e:
         db.session.rollback()
+        logging.exception("Error creating sample data")
         print(f"Error creating sample data: {str(e)}")
         raise
+
 
 def init_db():
     try:
@@ -550,6 +635,30 @@ def create_error_templates():
 ''')
 
     return "Error templates created!"
+
+@app.route('/learning/<int:course_id>', methods=['GET'])
+def learning(course_id):
+    step = request.args.get('step', default=1, type=int)
+    course = Course.query.get_or_404(course_id)
+
+    # Fetch steps dynamically from the database
+    steps = CourseStep.query.filter_by(course_id=course_id).order_by(CourseStep.number).all()
+    current_step = next((s for s in steps if s.number == step), None)
+    previous_step = next((s for s in steps if s.number == step - 1), None)
+    next_step = next((s for s in steps if s.number == step + 1), None)
+
+    # Fetch learning materials for the current step
+    materials = LearningMaterial.query.filter_by(course_id=course_id, step_number=step).all()
+
+    # Log fetched data for debugging
+    logging.debug(f"Course: {course}")
+    logging.debug(f"Steps: {steps}")
+    logging.debug(f"Current Step: {current_step}")
+    logging.debug(f"Materials: {materials}")
+
+    progress = (step / len(steps)) * 100 if steps else 0
+
+    return render_template('learning.html', course=course, steps=steps, current_step=current_step, previous_step=previous_step, next_step=next_step, progress=progress, materials=materials)
 
 if __name__ == '__main__':
     with app.app_context():

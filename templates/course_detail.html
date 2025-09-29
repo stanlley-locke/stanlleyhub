@@ -19,7 +19,7 @@
             {% if not is_enrolled %}
                 <a href="{{ url_for('enroll', course_id=course.id) }}" class="btn-primary">Enroll Now</a>
             {% else %}
-                <a href="#" class="btn-secondary">Continue Learning</a>
+                <a href="{{ url_for('learning', course_id=course.id) }}" class="btn-secondary">Continue Learning</a>
             {% endif %}
         </div>
         <div class="course-header-image">

@@ -50,3 +50,42 @@ class UserCourse(db.Model):
 
     def __repr__(self):
         return f'<UserCourse {self.user_id}:{self.course_id}>'
+
+class CourseStep(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=False)
+    number = db.Column(db.Integer, nullable=False)
+    title = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.Text, nullable=True)
+    video_url = db.Column(db.String(200), nullable=True)
+
+    course = db.relationship('Course', backref=db.backref('steps', lazy=True))
+
+    def __repr__(self):
+        return f'<CourseStep {self.course_id}:{self.number}>'
+
+class UserProgress(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=False)
+    step_number = db.Column(db.Integer, nullable=False)
+
+    user = db.relationship('User', backref=db.backref('progress', lazy=True))
+    course = db.relationship('Course', backref=db.backref('progress', lazy=True))
+
+    def __repr__(self):
+        return f'<UserProgress {self.user_id}:{self.course_id}:{self.step_number}>'
+
+class LearningMaterial(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=False)
+    step_number = db.Column(db.Integer, nullable=False)
+    material_type = db.Column(db.String(50), nullable=False)  # e.g., 'video', 'document', 'quiz'
+    title = db.Column(db.String(200), nullable=False)
+    url = db.Column(db.String(500), nullable=True)  # For external links
+    content = db.Column(db.Text, nullable=True)  # For embedded content like quizzes
+
+    course = db.relationship('Course', backref=db.backref('materials', lazy=True))
+
+    def __repr__(self):
+        return f'<LearningMaterial {self.course_id}:{self.step_number}:{self.material_type}>'

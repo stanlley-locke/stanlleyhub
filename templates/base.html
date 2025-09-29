@@ -90,12 +90,31 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2023 StanleyHub. All rights reserved.</p>
+                <p>&copy; 2025 StanleyHub. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     {% block extra_js %}{% endblock %}
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const themeToggle = document.createElement('button');
+        themeToggle.className = 'theme-toggle';
+        themeToggle.textContent = 'Switch Theme';
+        document.body.appendChild(themeToggle);
+
+        themeToggle.addEventListener('click', function() {
+          const currentTheme = document.documentElement.getAttribute('data-theme');
+          const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-theme', newTheme);
+          localStorage.setItem('theme', newTheme);
+        });
+
+        // Set initial theme based on localStorage
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      });
+    </script>
 </body>
 </html>
