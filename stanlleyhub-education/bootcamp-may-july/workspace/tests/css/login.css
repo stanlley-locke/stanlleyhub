@@ -1,0 +1,96 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: rgb(8, 217, 102);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url(../images/17521886048587412.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.auth-card {
+    background: rgb(255, 255, 255);
+    border-radius: 1.7rem;
+    box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    max-width: 480px;
+    padding: 2rem 2rem 2.2rem;
+}
+
+h1{
+    font-size: 1.9rem;
+    color: black;
+    margin-bottom: 0.3rem;
+}
+
+.subtitle {
+    color: #474747;
+    font-size: 0.9rem;
+    border-left: 3px solid #3b82f6;
+    padding-left: 0.75rem;
+    margin-bottom: 1.8rem;
+}
+
+.input-group {
+    margin-bottom: 1.3rem;
+    position: relative;
+}
+
+.input-group label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #474747;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 0.85rem 1rem 0.85rem 2.6rem;
+    font-size: 0.95rem;
+    border: 1.5px solid rgb(0, 0, 0);
+    border-radius: 1.2rem;
+}
+
+.password-wrapper {
+    position: relative;
+}
+
+.btn-primary {
+    background: #1e293b;
+    border: none;
+    width: 100%;
+    padding: 0.9rem;
+    border-radius: 2.1rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: white;
+    margin-top: 0.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.form-footer {
+    color: #1e293b;
+    margin-top: 1.5rem;
+    text-align: center;
+    font-size: 0.85rem;
+   
+}
+
+.form-footer a {
+    color: #3b82f6;
+    text-decoration: none;
+    font-weight: 500;
+}

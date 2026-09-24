@@ -1,0 +1,86 @@
+{
+  "courseTitle": "StanlleyHub Software Bootcamp",
+  "durationWeeks": 12,
+  "schedule": ["Tuesday", "Thursday", "Saturday"],
+  "deliveryModel": "Live, practical, project-based",
+  "tracks": [
+    "Full-Stack Web Development",
+    "Python Architecture",
+    "AI/ML and Agentic AI",
+    "DevOps and Infrastructure"
+  ],
+  "weeks": [
+    {
+      "id": "week-01",
+      "slug": "orientation-project-management-git-github",
+      "title": "Orientation, Project Management, Git, GitHub",
+      "files": ["overview.md", "tuesday.md", "thursday.md", "saturday.md", "assignment.md", "resources.md"]
+    },
+    {
+      "id": "week-02",
+      "slug": "html-css-web-foundations",
+      "title": "HTML, CSS, Web Foundations",
+      "files": ["overview.md", "tuesday.md", "thursday.md", "saturday.md", "assignment.md", "resources.md"]
+    },
+    {
+      "id": "week-03",
+      "slug": "javascript-fundamentals",
+      "title": "JavaScript Fundamentals",
+      "files": ["overview.md", "tuesday.md", "thursday.md", "saturday.md", "assignment.md", "resources.md"]
+    },
+    {
+      "id": "week-04",
+      "slug": "advanced-javascript-dom-debugging-collaboration",
+      "title": "Advanced JavaScript, DOM, Debugging, Collaboration",
+      "files": ["overview.md", "tuesday.md", "thursday.md", "saturday.md", "assignment.md", "resources.md"]
+    },
+    {
+      "id": "week-05",
+      "slug": "react-fundamentals",
+      "title": "React Fundamentals",
+      "files": ["overview.md", "tuesday.md", "thursday.md", "saturday.md", "assignment.md", "resources.md"]
+    },
+    {
+      "id": "week-06",
+      "slug": "node-express-apis",
+      "title": "Node, Express, APIs",
+      "files": ["overview.md", "tuesday.md", "thursday.md", "saturday.md", "assignment.md", "resources.md"]
+    },
+    {
+      "id": "week-07",
+      "slug": "python-fundamentals-oop",
+      "title": "Python Fundamentals and OOP",
+      "files": ["overview.md", "tuesday.md", "thursday.md", "saturday.md", "assignment.md", "resources.md"]
+    },
+    {
+      "id": "week-08",
+      "slug": "flask-django-basics",
+      "title": "Flask and Django Basics",
+      "files": ["overview.md", "tuesday.md", "thursday.md", "saturday.md", "assignment.md", "resources.md"]
+    },
+    {
+      "id": "week-09",
+      "slug": "databases-auth-architecture",
+      "title": "Databases, Auth, Architecture",
+      "files": ["overview.md", "tuesday.md", "thursday.md", "saturday.md", "assignment.md", "resources.md"]
+    },
+    {
+      "id": "week-10",
+      "slug": "ai-ml-llms-agentic-ai",
+      "title": "AI/ML, LLMs, Agentic AI",
+      "files": ["overview.md", "tuesday.md", "thursday.md", "saturday.md", "assignment.md", "resources.md"]
+    },
+    {
+      "id": "week-11",
+      "slug": "linux-docker-deployment-devops",
+      "title": "Linux, Docker, Deployment, DevOps",
+      "files": ["overview.md", "tuesday.md", "thursday.md", "saturday.md", "assignment.md", "resources.md"]
+    },
+    {
+      "id": "week-12",
+      "slug": "capstone-demo-graduation",
+      "title": "Capstone, Demo, Graduation",
+      "files": ["overview.md", "tuesday.md", "thursday.md", "saturday.md", "assignment.md", "resources.md"]
+    }
+  ]
+}

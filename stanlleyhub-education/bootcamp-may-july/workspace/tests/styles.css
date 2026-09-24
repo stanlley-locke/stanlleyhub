@@ -1,0 +1,32 @@
+/* Cascading Style Sheet */
+
+/*Type*/
+body {
+
+    /*Reset Default margins*/
+    margin: 0;
+
+    /*Topography*/
+    font-family:'Times New Roman', Times, serif;
+    font-size: 15px;
+    color: red;
+    background-color: aqua;
+
+}
+
+/*class*/
+.header {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: larger;
+   
+    background-color: white;
+    margin: 5%;
+    padding: 5%;
+    border: 5px solid black;
+    border-radius: 15px;
+
+    /*colors*/
+ 
+    color:rgb(13, 214, 174);
+       
+}

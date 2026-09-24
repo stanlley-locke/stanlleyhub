@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Portal</title>
+    <link rel="stylesheet" href="./css/login.css">
+</head>
+<body>
+    <div class="auth-card">
+        <h1>Sign In</h1>
+        <div class="subtitle">Access Your Acc.</div>
+        <form id="loginForm">
+            <div class="input-group">
+                <label>Email Adress</label>
+                <input type="email" id="loginEmail" placeholder="company@email.com" autocomplete="email" required>
+            </div>
+            <div class="input-group">
+                <label>Password</label>
+                <div class="password-wrapper">
+                    <input type="password" id="loginEmail" placeholder="••••••••" autocomplete="current-password" required>
+                </div>
+            </div>
+            <button type="submit" class="btn-primary">Login</button>
+        </form>
+        <div class="form-footer">
+            <a href="forgot-password.html">Forgot Password?</a>
+            <br><br>
+            New here? <a href="signup.html">Create Account</a>
+        </div>
+    </div>
+    <script src="/js/login.js"></script>
+</body>
+</html>

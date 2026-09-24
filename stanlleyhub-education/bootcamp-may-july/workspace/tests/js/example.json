@@ -1,0 +1,13 @@
+{
+  "firstName": "John",
+  "lastName": "Doe",
+  "age": 30,
+  "isActive": true,
+  "email": "john.doe@example.com",
+  "skills": ["Python", "JSON", "JavaScript"],
+  "address": {
+    "city": "Nairobi",
+    "country": "Kenya"
+  },
+  "phoneNumber": null
+}

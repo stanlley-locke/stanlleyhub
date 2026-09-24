@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/sighnup.css">
+    <title>Sign Up | Join Platform</title>
+</head>
+<body>
+    
+    <div class="auth-card">
+        <h1>Create Acc.</h1>
+        <div class="subtitle">Start Your Journey</div>
+        <form id="signupform">
+            <div class="input-group">
+                <label for="">Full Name</label>
+                <input type="text" id="sighnupName" placeholder="Stanlley Locke"  autocomplete="name">
+            </div>
+            <div class="input-group">
+                <label for="">Email Address</label>
+                <input type="email" placeholder="stanlleylocke@gmail.com" autocomplete="email"  id="sighnupEmail" required>
+            </div>
+            <div class="input-group">
+                <label for="">Password</label>
+                <div class="password-wrapper">
+                    <input type="password" placeholder="Atleast 6 Characters"  id="sighnupPassword" required>
+                </div>
+            </div>
+            <div class="input-group">
+                <label for="">Confirm Password</label>
+                <div>
+                    <input type="password" placeholder="Confirm Password"   id="sighnupConfirm" required>
+                </div>
+            </div>
+            <button type="submit" class="btn-primary">Sighn Up</button>
+        </form>
+        <div id="signupMessage" class="message-banner"></div>
+        <div class="form-footer">
+            Already Have an Acc? <a href="login.html">Sign In</a>
+        </div>
+    </div> 
+    <script src="/js/signup.js"></script>
+</body>
+</html>
