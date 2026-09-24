@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ article.title }} | StanleyHub{% endblock %}
+
+{% block content %}
+<section class="article-header">
+    <div class="container">
+        <div class="article-breadcrumb">
+            <a href="{{ url_for('articles') }}">Articles</a> / 
+            <span>{{ article.category|replace('_', ' ')|capitalize }}</span>
+        </div>
+        <h1>{{ article.title }}</h1>
+        <div class="article-meta">
+            <span class="article-date">{{ article.created_at.strftime('%B %d, %Y') }}</span>
+            <span class="article-category">{{ article.category|replace('_', ' ')|capitalize }}</span>
+        </div>
+    </div>
+</section>
+
+<section class="article-content">
+    <div class="container">
+        <div class="article-main">
+            <div class="article-image">
+                <img src="{{ url_for('static', filename='images/' + article.image) }}" alt="{{ article.title }}">
+            </div>
+            <div class="article-body">
+                {{ article.content|safe }}
+            </div>
+
+            <div class="article-tags">
+                <span class="tag">{{ article.category }}</span>
+                <span class="tag">education</span>
+                <span class="tag">learning</span>
+            </div>
+
+            <div class="article-share">
+                <h3>Share this article</h3>
+                <div class="share-buttons">
+                    <a href="#" class="share-button"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="share-button"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="share-button"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="article-sidebar">
+            <div class="sidebar-section">
+                <h3>Related Articles</h3>
+                <div class="related-articles">
+                    <div class="related-article">
+                        <div class="related-article-image">
+                            <img src="{{ url_for('static', filename='images/owasp.jpg') }}" alt="Introduction to OWASP Top 10">
+                        </div>
+                        <div class="related-article-content">
+                            <h4><a href="#">Introduction to OWASP Top 10</a></h4>
+                            <span class="article-date">June 15, 2023</span>
+                        </div>
+                    </div>
+                    <div class="related-article">
+                        <div class="related-article-image">
+                            <img src="{{ url_for('static', filename='images/code_review.jpg') }}" alt="Best Practices for Secure Code Review">
+                        </div>
+                        <div class="related-article-content">
+                            <h4><a href="#">Best Practices for Secure Code Review</a></h4>
+                            <span class="article-date">May 22, 2023</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Popular Courses</h3>
+                <div class="popular-courses">
+                    <div class="popular-course">
+                        <div class="popular-course-image">
+                            <img src="{{ url_for('static', filename='images/cyber_intro.jpg') }}" alt="Introduction to Cybersecurity">
+                        </div>
+                        <div class="popular-course-content">
+                            <h4><a href="#">Introduction to Cybersecurity</a></h4>
+                            <div class="course-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span>4.8</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="popular-course">
+                        <div class="popular-course-image">
+                            <img src="{{ url_for('static', filename='images/fullstack.jpg') }}" alt="Full Stack Web Development">
+                        </div>
+                        <div class="popular-course-content">
+                            <h4><a href="#">Full Stack Web Development</a></h4>
+                            <div class="course-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span>4.9</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

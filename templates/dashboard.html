@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard | StanleyHub{% endblock %}
+
+{% block content %}
+<section class="dashboard">
+    <div class="container">
+        <div class="dashboard-header">
+            <h1>Welcome, {{ user.name }}</h1>
+            <p>Track your progress and continue learning</p>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="dashboard-sidebar">
+                <div class="user-profile">
+                    <div class="user-avatar">
+                        <span>{{ user.name[0] }}</span>
+                    </div>
+                    <div class="user-info">
+                        <h3>{{ user.name }}</h3>
+                        <p>{{ user.email }}</p>
+                    </div>
+                </div>
+
+                <nav class="dashboard-nav">
+                    <ul>
+                        <li class="active"><a href="#"><i class="fas fa-home"></i> Dashboard</a></li>
+                        <li><a href="#"><i class="fas fa-book"></i> My Courses</a></li>
+                        <li><a href="#"><i class="fas fa-certificate"></i> Certificates</a></li>
+                        <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="dashboard-content">
+                <div class="dashboard-section">
+                    <h2>My Courses</h2>
+                    {% if enrolled_courses %}
+                        <div class="courses-grid">
+                            {% for course in enrolled_courses %}
+                                <div class="course-card">
+                                    <div class="course-image">
+                                        <img src="{{ url_for('static', filename='images/' + course.image) }}" alt="{{ course.title }}">
+                                        <div class="course-level {{ course.level }}">{{ course.level|capitalize }}</div>
+                                    </div>
+                                    <div class="course-content">
+                                        <div class="course-category">{{ course.category|replace('_', ' ')|capitalize }}</div>
+                                        <h3><a href="{{ url_for('course_detail', course_id=course.id) }}">{{ course.title }}</a></h3>
+                                        <div class="course-progress">
+                                            <div class="progress-bar">
+                                                <div class="progress" style="width: 0%;"></div>
+                                            </div>
+                                            <span class="progress-text">0% Complete</span>
+                                        </div>
+                                        <a href="{{ url_for('course_detail', course_id=course.id) }}" class="btn-text">Continue <i class="fas fa-arrow-right"></i></a>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="empty-state">
+                            <div class="empty-icon">
+                                <i class="fas fa-book"></i>
+                            </div>
+                            <h3>No courses yet</h3>
+                            <p>You haven't enrolled in any courses yet. Browse our catalog to get started.</p>
+                            <a href="{{ url_for('courses') }}" class="btn-primary">Browse Courses</a>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="dashboard-section">
+                    <h2>Recommended for You</h2>
+                    <div class="courses-grid">
+                        <div class="course-card">
+                            <div class="course-image">
+                                <img src="{{ url_for('static', filename='images/cyber_intro.jpg') }}" alt="Introduction to Cybersecurity">
+                                <div class="course-level beginner">Beginner</div>
+                            </div>
+                            <div class="course-content">
+                                <div class="course-category">Cybersecurity</div>
+                                <h3><a href="#">Introduction to Cybersecurity</a></h3>
+                                <p>Learn the fundamentals of cybersecurity including threat models, security principles, and basic security practices.</p>
+                                <a href="#" class="btn-text">Learn More <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                        <div class="course-card">
+                            <div class="course-image">
+                                <img src="{{ url_for('static', filename='images/fullstack.jpg') }}" alt="Full Stack Web Development">
+                                <div class="course-level intermediate">Intermediate</div>
+                            </div>
+                            <div class="course-content">
+                                <div class="course-category">Software Engineering</div>
+                                <h3><a href="#">Full Stack Web Development</a></h3>
+                                <p>Build complete web applications from front-end to back-end using modern frameworks and best practices.</p>
+                                <a href="#" class="btn-text">Learn More <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

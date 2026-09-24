@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block title %}Learning {{ course.title }} | StanleyHub{% endblock %}
+
+{% block content %}
+<section class="learning-header">
+    <div class="container">
+        <h1>Continue Learning: {{ course.title }}</h1>
+        <p>{{ course.description }}</p>
+        <div class="progress-bar">
+            <div class="progress" style="width: {{ progress }}%;"></div>
+        </div>
+        <span>{{ progress }}% Complete</span>
+    </div>
+</section>
+
+<section class="learning-content">
+    <div class="container">
+        <div class="learning-step">
+            <h2>Step {{ current_step.number }}: {{ current_step.title }}</h2>
+            <p>{{ current_step.description }}</p>
+
+            {% if current_step.video_url %}
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/{{ current_step.video_url }}" frameborder="0" allowfullscreen></iframe>
+                </div>
+            {% endif %}
+
+            {% if current_step.resources %}
+                <h3>Additional Resources</h3>
+                <ul>
+                    {% for resource in current_step.resources %}
+                        <li><a href="{{ resource.url }}" target="_blank">{{ resource.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            <div class="navigation-buttons">
+                {% if previous_step %}
+                    <a href="{{ url_for('learning', course_id=course.id, step=previous_step.number) }}" class="btn-secondary">Previous</a>
+                {% endif %}
+                {% if next_step %}
+                    <a href="{{ url_for('learning', course_id=course.id, step=next_step.number) }}" class="btn-primary">Next</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="learning-materials">
+    <div class="container">
+        <h3>Learning Materials</h3>
+        <ul>
+            {% for material in materials %}
+                <li>
+                    {% if material.material_type == 'video' %}
+                        <a href="{{ material.url }}" target="_blank">🎥 {{ material.title }}</a>
+                    {% elif material.material_type == 'document' %}
+                        <a href="{{ material.url }}" target="_blank">📄 {{ material.title }}</a>
+                    {% elif material.material_type == 'quiz' %}
+                        <a href="{{ url_for('quiz', quiz_id=material.id) }}">📝 {{ material.title }}</a>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</section>
+
+<section class="learning-curriculum">
+    <div class="container">
+        <h2>Course Curriculum</h2>
+        <ul class="curriculum-list">
+            {% for step in steps %}
+                <li class="curriculum-item {% if step.number == current_step.number %}active{% endif %}">
+                    <a href="{{ url_for('learning', course_id=course.id, step=step.number) }}">
+                        Step {{ step.number }}: {{ step.title }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</section>
+{% endblock %}

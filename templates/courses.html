@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% block title %}Courses | StanleyHub{% endblock %}
+
+{% block content %}
+<section class="courses-header">
+    <div class="container">
+        <h1>Courses</h1>
+        <p>Explore our comprehensive courses in software engineering and cybersecurity</p>
+    </div>
+</section>
+
+<section class="courses-filters">
+    <div class="container">
+        <div class="filters">
+            <div class="filter-group">
+                <label for="category-filter">Category</label>
+                <select id="category-filter" class="filter-select">
+                    <option value="all">All Categories</option>
+                    <option value="software_engineering">Software Engineering</option>
+                    <option value="cybersecurity">Cybersecurity</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="level-filter">Level</label>
+                <select id="level-filter" class="filter-select">
+                    <option value="all">All Levels</option>
+                    <option value="beginner">Beginner</option>
+                    <option value="intermediate">Intermediate</option>
+                    <option value="advanced">Advanced</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="sort-filter">Sort By</label>
+                <select id="sort-filter" class="filter-select">
+                    <option value="newest">Newest</option>
+                    <option value="popular">Most Popular</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="courses-list">
+    <div class="container">
+        <div class="courses-grid" id="courses-grid">
+            {% for course in courses %}
+            <div class="course-card" data-category="{{ course.category }}" data-level="{{ course.level }}">
+                <div class="course-image">
+                    <img src="{{ url_for('static', filename='images/' + course.image) }}" alt="{{ course.title }}">
+                    <div class="course-level {{ course.level }}">{{ course.level|capitalize }}</div>
+                </div>
+                <div class="course-content">
+                    <div class="course-category">{{ course.category|replace('_', ' ')|capitalize }}</div>
+                    <h3><a href="{{ url_for('course_detail', course_id=course.id) }}">{{ course.title }}</a></h3>
+                    <p>{{ course.description|truncate(100) }}</p>
+                    <a href="{{ url_for('course_detail', course_id=course.id) }}" class="btn-text">Learn More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const categoryFilter = document.getElementById('category-filter');
+        const levelFilter = document.getElementById('level-filter');
+        const coursesGrid = document.getElementById('courses-grid');
+        const courseCards = document.querySelectorAll('.course-card');
+
+        function filterCourses() {
+            const selectedCategory = categoryFilter.value;
+            const selectedLevel = levelFilter.value;
+
+            courseCards.forEach(card => {
+                const category = card.dataset.category;
+                const level = card.dataset.level;
+
+                const categoryMatch = selectedCategory === 'all' || category === selectedCategory;
+                const levelMatch = selectedLevel === 'all' || level === selectedLevel;
+
+                if (categoryMatch && levelMatch) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        categoryFilter.addEventListener('change', filterCourses);
+        levelFilter.addEventListener('change', filterCourses);
+    });
+</script>
+{% endblock %}

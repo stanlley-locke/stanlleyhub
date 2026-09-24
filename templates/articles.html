@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block title %}Articles | StanleyHub{% endblock %}
+
+{% block content %}
+<section class="articles-header">
+    <div class="container">
+        <h1>Articles</h1>
+        <p>Stay updated with the latest trends and insights in software engineering and cybersecurity</p>
+    </div>
+</section>
+
+<section class="articles-filters">
+    <div class="container">
+        <div class="filters">
+            <div class="filter-group">
+                <label for="category-filter">Category</label>
+                <select id="category-filter" class="filter-select">
+                    <option value="all">All Categories</option>
+                    <option value="software_engineering">Software Engineering</option>
+                    <option value="cybersecurity">Cybersecurity</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="articles-list">
+    <div class="container">
+        <div class="articles-grid" id="articles-grid">
+            {% for article in articles %}
+            <div class="article-card" data-category="{{ article.category }}">
+                <div class="article-image">
+                    <img src="{{ url_for('static', filename='images/' + article.image) }}" alt="{{ article.title }}">
+                    <div class="article-category">{{ article.category|replace('_', ' ')|capitalize }}</div>
+                </div>
+                <div class="article-content">
+                    <h3><a href="{{ url_for('article_detail', article_id=article.id) }}">{{ article.title }}</a></h3>
+                    <p>{{ article.content|truncate(150) }}</p>
+                    <div class="article-meta">
+                        <span class="article-date">{{ article.created_at.strftime('%B %d, %Y') }}</span>
+                        <a href="{{ url_for('article_detail', article_id=article.id) }}" class="btn-text">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const categoryFilter = document.getElementById('category-filter');
+        const articlesGrid = document.getElementById('articles-grid');
+        const articleCards = document.querySelectorAll('.article-card');
+
+        function filterArticles() {
+            const selectedCategory = categoryFilter.value;
+
+            articleCards.forEach(card => {
+                const category = card.dataset.category;
+
+                if (selectedCategory === 'all' || category === selectedCategory) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        categoryFilter.addEventListener('change', filterArticles);
+    });
+</script>
+{% endblock %}
