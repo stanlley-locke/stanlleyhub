@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard | Home</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="/css/home.css">
+</head>
+<body>
+<div class="dashboard-card" id="homeContainer">
+  <div class="nav-links">
+    <a href="#">Dashboard</a>
+    <a href="#">Projects</a>
+    <a href="#">Settings</a>
+    <button id="logoutBtn" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Sign out</button>
+  </div>
+
+  <div class="profile-row">
+    <img id="avatarImg" class="avatar-img" src="https://ui-avatars.com/api/?background=3b82f6&color=fff&name=User&size=80&rounded=true" alt="profile">
+    <div class="welcome-text">
+      <h2>Welcome back, <span id="userName">User</span></h2>
+      <p><i class="fas fa-envelope"></i> <span id="userEmail">email@example.com</span></p>
+      <p class="session-info">You are logged into your secure workspace.</p>
+    </div>
+  </div>
+
+  <hr>
+  <h3>Inspiration Gallery</h3>
+  <div class="image-gallery">
+    <div class="image-card">
+      <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=400&h=250&fit=crop" alt="modern office">
+      <p>Modern workspace</p>
+    </div>
+    <div class="image-card">
+      <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400&h=250&fit=crop" alt="team collaboration">
+      <p>Team synergy</p>
+    </div>
+    <div class="image-card">
+      <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=250&fit=crop" alt="analytics dashboard">
+      <p>Data insights</p>
+    </div>
+  </div>
+
+  <hr>
+  <div class="info-card">
+    <i class="fas fa-chart-line"></i> <strong>Activity summary</strong>
+    <p>Your session is active. Explore all features with full security.</p>
+  </div>
+</div>
+<script src="/js/home.js"></script>
+</body>
+</html>

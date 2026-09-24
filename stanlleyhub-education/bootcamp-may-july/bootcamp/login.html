@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | Portal</title>
+  <link rel="stylesheet" href="/css/login.css">
+</head>
+<body>
+<div class="auth-card">
+  <h1>Sign in</h1>
+  <div class="subtitle">Access your account</div>
+  <form id="loginForm">
+    <div class="input-group">
+      <label>Email address</label>
+      <i class="fas fa-envelope"></i>
+      <input type="email" id="loginEmail" placeholder="name@company.com" autocomplete="email" required>
+    </div>
+    <div class="input-group">
+      <label>Password</label>
+      <div class="password-wrapper">
+        <i class="fas fa-lock"></i>
+        <input type="password" id="loginPassword" placeholder="••••••••" autocomplete="current-password" required>
+        <span class="toggle-pw" onclick="togglePassword('loginPassword')"><i class="far fa-eye-slash"></i></span>
+      </div>
+    </div>
+    <button type="submit" class="btn-primary"><i class="fas fa-arrow-right-to-bracket"></i> Log in</button>
+  </form>
+  <div id="loginMessage" class="message-banner"></div>
+  <div class="form-footer">
+    <a href="forgot-password.html">Forgot password?</a>
+    <br><br>
+    New here? <a href="signup.html">Create account</a>
+  </div>
+</div>
+<script src="/js/login.js"></script>
+</body>
+</html>
